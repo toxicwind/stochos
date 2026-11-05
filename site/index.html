@@ -3,186 +3,327 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>stochos · benchmark proof</title>
+<title>stochos · model-routing proof</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- jsDelivr + Google fonts: cutting-edge stack -->
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.0.18/index.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.18/index.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource-variable/ibm-plex-sans@5.0.18/index.min.css" rel="stylesheet">
 <style>
-:root {
-  --bg: #0b0e14; --bg2: #12161f; --card: #171c28; --border: #232a3a;
-  --text: #e6e9f0; --muted: #8b93a7; --accent: #6ee7b7; --accent2: #60a5fa;
-  --gold: #fbbf24; --red: #f87171; --green: #4ade80;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Space Grotesk", system-ui, sans-serif;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-}
-.wrap { max-width: 960px; margin: 0 auto; }
+  :root {
+    --bg: #07080d;
+    --bg2: #0d1017;
+    --card: rgba(20, 24, 35, 0.7);
+    --border: rgba(255,255,255,0.08);
+    --border-hi: rgba(110,231,183,0.35);
+    --text: #e8ecf4;
+    --muted: #7d8799;
+    --accent: #6ee7b7;
+    --accent2: #60a5fa;
+    --gold: #fbbf24;
+    --red: #f87171;
+    --green: #4ade80;
+    --glass: rgba(255,255,255,0.03);
+    --radius: 16px;
+    --shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background:
+      radial-gradient(1000px 500px at 15% -10%, rgba(96,165,250,0.12), transparent 60%),
+      radial-gradient(800px 400px at 90% 0%, rgba(110,231,183,0.10), transparent 55%),
+      radial-gradient(1200px 800px at 50% 120%, rgba(251,191,36,0.05), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: "Inter", "Space Grotesk", system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
 
-/* --- proof header --- */
-.proof-header {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.proof-header h1 {
-  font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
-  color: var(--accent); margin-bottom: 0.3rem;
-}
-.proof-header .meta {
-  font-family: "JetBrains Mono", monospace; font-size: 0.75rem;
-  color: var(--muted); margin-bottom: 1rem;
-}
-.proof-header .meta span { color: var(--text); }
+  /* --- hero --- */
+  .hero {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, rgba(110,231,183,0.06), transparent 40%, rgba(96,165,250,0.06));
+    pointer-events: none;
+  }
+  .hero .kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    background: linear-gradient(120deg, var(--accent), var(--accent2) 60%, var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
+  .hero .sub { color: var(--muted); font-size: 1rem; max-width: 640px; }
+  .hero .meta {
+    margin-top: 1.2rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .hero .meta .stat b { color: var(--text); font-weight: 600; }
 
-/* --- source image --- */
-.source-img {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-.source-img img { width: 100%; display: block; }
-.source-img .caption {
-  padding: 0.5rem 0.8rem;
-  font-family: "JetBrains Mono", monospace; font-size: 0.7rem;
-  color: var(--muted); background: var(--bg2);
-}
+  /* --- section --- */
+  .section { margin-bottom: 2.5rem; }
+  .section-head {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .section-head h2 {
+    font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .section-head .tag {
+    font-family: "JetBrains Mono", monospace; font-size: 0.62rem;
+    background: rgba(110,231,183,0.12); border: 1px solid rgba(110,231,183,0.25);
+    color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .section-head .tag.blue { background: rgba(96,165,250,0.12); border-color: rgba(96,165,250,0.25); color: var(--accent2); }
 
-/* --- evidence blocks --- */
-.evidence { margin-bottom: 1.5rem; }
-.evidence h2 {
-  font-size: 1.1rem; font-weight: 600; margin-bottom: 0.8rem;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.evidence h2 .badge {
-  font-family: "JetBrains Mono", monospace; font-size: 0.65rem;
-  background: var(--bg2); border: 1px solid var(--border);
-  padding: 0.15rem 0.5rem; border-radius: 4px; color: var(--muted);
-}
+  /* --- subject image --- */
+  .subject {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    margin-bottom: 1rem;
+  }
+  .subject .img-wrap { position: relative; }
+  .subject img { width: 100%; display: block; max-height: 480px; object-fit: contain; background: #000; }
+  .subject .scanline {
+    position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(110,231,183,0.02) 2px 4px);
+  }
+  .subject .caption {
+    padding: 0.7rem 1rem;
+    font-family: "JetBrains Mono", monospace; font-size: 0.68rem;
+    color: var(--muted); background: var(--bg2);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .subject .caption .file { color: var(--accent); }
 
-/* --- winner card --- */
-.winner {
-  border: 1px solid var(--accent);
-  border-radius: 10px;
-  background: linear-gradient(120deg, rgba(110,231,183,0.08), rgba(96,165,250,0.08));
-  padding: 1rem 1.2rem;
-  margin-bottom: 1rem;
-  display: flex; align-items: center; gap: 1rem;
-  flex-wrap: wrap;
-}
-.winner .crown { font-size: 1.6rem; }
-.winner .info { flex: 1; min-width: 0; }
-.winner .model { font-weight: 700; font-size: 1.05rem; }
-.winner .lane { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--muted); }
-.winner .metrics { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; text-align: right; }
-.winner .metrics .ms { color: var(--accent); font-size: 1.1rem; }
-.winner .metrics .score { color: var(--gold); }
+  /* --- prompt card --- */
+  .prompt-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
+  }
+  .prompt-card:hover { border-color: var(--border-hi); }
+  .prompt-card .pc-head {
+    padding: 1rem 1.3rem;
+    display: flex; align-items: center; gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--glass);
+  }
+  .prompt-card .pc-head .id {
+    font-family: "JetBrains Mono", monospace; font-size: 0.7rem;
+    background: var(--bg2); border: 1px solid var(--border);
+    padding: 0.3rem 0.7rem; border-radius: 8px; color: var(--accent);
+  }
+  .prompt-card .pc-head .prompt-text {
+    flex: 1; color: var(--muted); font-size: 0.85rem; font-style: italic;
+  }
+  .prompt-card .pc-head .rows-badge {
+    font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: var(--muted);
+    white-space: nowrap;
+  }
+  .prompt-card .pc-body { padding: 1.2rem 1.3rem; }
 
-/* --- full table --- */
-.full-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-}
-.full-table th {
-  text-align: left;
-  padding: 0.5rem 0.7rem;
-  border-bottom: 2px solid var(--border);
-  color: var(--muted);
-  font-weight: 600;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  position: sticky;
-  top: 0;
-  background: var(--card);
-}
-.full-table td {
-  padding: 0.45rem 0.7rem;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.full-table tr:hover { background: rgba(110,231,183,0.03); }
-.full-table .rank-cell { width: 2rem; text-align: center; color: var(--muted); }
-.full-table .rank-cell.r1 { color: var(--gold); font-weight: 700; }
-.full-table .rank-cell.r2 { color: var(--silver); font-weight: 700; }
-.full-table .rank-cell.r3 { color: var(--bronze); font-weight: 700; }
-.full-table .model-cell { color: var(--text); font-weight: 600; }
-.full-table .lane-cell { color: var(--muted); }
-.full-table .ms-cell { color: var(--text); text-align: right; white-space: nowrap; }
-.full-table .score-cell { text-align: right; white-space: nowrap; }
-.full-table .score-cell.high { color: var(--green); }
-.full-table .score-cell.mid { color: var(--gold); }
-.full-table .score-cell.low { color: var(--red); }
-.full-table .status-ok { color: var(--green); }
-.full-table .status-err { color: var(--red); }
+  /* --- winner --- */
+  .winner {
+    display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
+    background: linear-gradient(120deg, rgba(110,231,183,0.10), rgba(96,165,250,0.08));
+    border: 1px solid var(--border-hi);
+    border-radius: 12px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+  .winner .trophy {
+    font-size: 1.8rem; filter: drop-shadow(0 0 12px rgba(251,191,36,0.5));
+  }
+  .winner .info { flex: 1; min-width: 0; }
+  .winner .info .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.2rem; }
+  .winner .info .model { font-weight: 700; font-size: 1.05rem; }
+  .winner .info .lane { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--muted); }
+  .winner .metrics { text-align: right; font-family: "JetBrains Mono", monospace; }
+  .winner .metrics .ms { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .winner .metrics .ms small { font-size: 0.7rem; color: var(--muted); font-weight: 400; }
+  .winner .metrics .score { color: var(--gold); font-size: 0.85rem; }
 
-/* --- algorithm --- */
-.algo-block {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg2);
-  padding: 1rem 1.2rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-  line-height: 1.6;
-  color: var(--muted);
-  overflow-x: auto;
-}
-.algo-block .kw { color: var(--accent); }
-.algo-block .num { color: var(--gold); }
-.algo-block .str { color: var(--accent2); }
+  /* --- table --- */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-family: "JetBrains Mono", monospace; font-size: 0.72rem; min-width: 640px; }
+  thead th {
+    text-align: left; padding: 0.6rem 0.8rem;
+    background: var(--bg2); color: var(--muted);
+    font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+  }
+  tbody td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr { transition: background 0.15s; }
+  tbody tr:hover { background: rgba(110,231,183,0.04); }
+  .rk { width: 2rem; text-align: center; color: var(--muted); }
+  .rk.r1 { color: var(--gold); font-weight: 700; }
+  .rk.r2 { color: #cbd5e1; font-weight: 700; }
+  .rk.r3 { color: var(--bronze, #d97706); font-weight: 700; }
+  .model-cell { color: var(--text); font-weight: 600; }
+  .lane-cell { color: var(--muted); font-size: 0.65rem; }
+  .num { text-align: right; white-space: nowrap; }
+  .score-cell { text-align: right; white-space: nowrap; }
+  .score-cell.high { color: var(--green); }
+  .score-cell.mid { color: var(--gold); }
+  .score-cell.low { color: var(--red); }
+  .st-ok { color: var(--green); }
+  .st-err { color: var(--red); }
 
-/* --- collapse toggle --- */
-.collapse-toggle {
-  background: none; border: 1px solid var(--border); color: var(--muted);
-  font-family: "JetBrains Mono", monospace; font-size: 0.7rem;
-  padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer;
-  margin-bottom: 0.5rem;
-}
-.collapse-toggle:hover { border-color: var(--accent); color: var(--text); }
-.collapse-content { display: none; }
-.collapse-content.open { display: block; }
+  /* --- raw expander --- */
+  .raw-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    font-family: "JetBrains Mono", monospace; font-size: 0.62rem;
+    padding: 0.2rem 0.6rem; border-radius: 6px; cursor: pointer;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .raw-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .raw-btn.no-text { opacity: 0.5; cursor: not-allowed; }
+  .raw-cell { display: none; }
+  .raw-cell.open { display: table-cell; }
+  .raw-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.8rem;
+    font-family: "JetBrains Mono", monospace; font-size: 0.68rem;
+    color: var(--text); white-space: pre-wrap; word-break: break-word;
+    max-height: 260px; overflow-y: auto; line-height: 1.5;
+  }
+  .raw-box .gap-note { color: var(--red); font-style: italic; }
 
-/* --- footer --- */
-footer {
-  margin-top: 2.5rem;
-  color: var(--muted); font-size: 0.7rem;
-  text-align: center; font-family: "JetBrains Mono", monospace;
-}
-footer a { color: var(--accent); text-decoration: none; }
+  /* --- method --- */
+  .method {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .method .formula {
+    font-family: "JetBrains Mono", monospace; font-size: 0.8rem;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.2rem; line-height: 1.9; overflow-x: auto;
+  }
+  .method .formula .kw { color: var(--accent); }
+  .method .formula .num { color: var(--gold); }
+  .method .formula .str { color: var(--accent2); }
+  .method .weights { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+  .method .weight {
+    flex: 1; min-width: 120px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.8rem;
+  }
+  .method .weight .w-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .method .weight .w-val { font-family: "JetBrains Mono", monospace; font-size: 1.4rem; font-weight: 700; color: var(--accent); }
 
-@media (max-width: 600px) {
-  .winner { flex-direction: column; align-items: flex-start; }
-  .winner .metrics { text-align: left; width: 100%; }
-  .full-table { font-size: 0.65rem; }
-  .full-table th, .full-table td { padding: 0.35rem 0.4rem; }
-}
+  /* --- footer --- */
+  footer {
+    margin-top: 3rem; text-align: center;
+    font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* --- reveal animation --- */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    body { padding: 1.5rem 0.8rem 3rem; }
+    .hero { padding: 1.8rem 1.2rem; }
+    .winner { flex-direction: column; align-items: flex-start; }
+    .winner .metrics { text-align: left; }
+    .prompt-card .pc-head { flex-wrap: wrap; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="proof-header">
-    <h1>stochos · model-routing benchmark proof</h1>
+  <!-- HERO -->
+  <header class="hero reveal in">
+    <div class="kicker"><span class="dot"></span> stochos · targeting control plane</div>
+    <h1>Model-routing<br>benchmark proof</h1>
+    <p class="sub">A verifiable audit of which (provider, model) answers each complex-prompt class fastest and correctly — raw responses, failures, and method included. Not a ranking. A proof.</p>
     <div class="meta" id="meta"></div>
-    <div id="source-image"></div>
-  </div>
+  </header>
 
-  <div id="evidence"></div>
+  <!-- SUBJECT -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Subject</h2>
+      <span class="tag blue">source image</span>
+    </div>
+    <div id="subject"></div>
+  </section>
 
-  <div class="evidence">
-    <h2>selection algorithm <span class="badge">source</span></h2>
-    <div class="algo-block" id="algo"></div>
-  </div>
+  <!-- EVIDENCE -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Evidence</h2>
+      <span class="tag">per prompt · all rows + raw output</span>
+    </div>
+    <div id="evidence"></div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="section reveal">
+    <div class="section-head">
+      <h2>Method</h2>
+      <span class="tag blue">scoring</span>
+    </div>
+    <div class="method">
+      <div class="formula" id="algo"></div>
+      <div class="weights" id="weights"></div>
+    </div>
+  </section>
 
   <footer>
     nightly benchmark · <a href="https://github.com/toxicwind/stochos">toxicwind/stochos</a> ·
@@ -190,115 +331,152 @@ footer a { color: var(--accent); text-decoration: none; }
   </footer>
 
 </div>
+
 <script>
 async function init() {
   const res = await fetch("./leaderboard.json");
   const data = await res.json();
 
-  // header meta
-  document.getElementById("meta").innerHTML =
-    `<span>generated</span> ${new Date(data.generatedAt).toLocaleString()} &middot; <span>benchmark</span> ${escapeHtml(data.benchmark)}`;
+  // meta
+  const totalRows = Object.values(data.prompts).reduce((s, p) => s + p.all.length, 0);
+  const totalOk = Object.values(data.prompts).reduce((s, p) => s + p.all.filter(r => r.ok).length, 0);
+  const promptCount = Object.keys(data.prompts).length;
+  document.getElementById("meta").innerHTML = `
+    <div class="stat">generated <b>${new Date(data.generatedAt).toLocaleString()}</b></div>
+    <div class="stat">prompts <b>${promptCount}</b></div>
+    <div class="stat">rows <b>${totalRows}</b></div>
+    <div class="stat">ok <b>${totalOk}</b></div>
+    <div class="stat">benchmark <b>${escapeHtml(data.benchmark)}</b></div>`;
 
-  // source image
+  // subject
   if (data.imageUrl) {
-    document.getElementById("source-image").innerHTML =
-      `<div class="source-img"><img src="${escapeHtml(data.imageUrl)}" alt="benchmark source image"><div class="caption">${escapeHtml(data.image)} — source image used for all prompts</div></div>`;
+    document.getElementById("subject").innerHTML = `
+      <div class="subject">
+        <div class="img-wrap">
+          <img src="${escapeHtml(data.imageUrl)}" alt="benchmark source image" loading="lazy">
+          <div class="scanline"></div>
+        </div>
+        <div class="caption">
+          <span class="file">${escapeHtml(data.image)}</span>
+          <span>source image used for all prompts</span>
+        </div>
+      </div>`;
   }
 
+  // evidence
   const evidence = document.getElementById("evidence");
-  const promptNames = Object.keys(data.prompts);
-  const totalRows = promptNames.reduce((s, p) => s + data.prompts[p].all.length, 0);
-  const totalOk = promptNames.reduce((s, p) => s + data.prompts[p].all.filter(r => r.ok).length, 0);
+  Object.entries(data.prompts).forEach(([name, p], idx) => {
+    const card = document.createElement("div");
+    card.className = "prompt-card";
 
-  promptNames.forEach((pname) => {
-    const p = data.prompts[pname];
-    const block = document.createElement("div");
-    block.className = "evidence";
+    // head
+    const head = document.createElement("div");
+    head.className = "pc-head";
+    head.innerHTML = `
+      <span class="id">${escapeHtml(name)}</span>
+      <span class="prompt-text">${escapeHtml(p.promptText || "")}</span>
+      <span class="rows-badge">${p.all.length} rows · ${p.all.filter(r=>r.ok).length} ok</span>`;
+    card.appendChild(head);
 
-    // header
-    const h2 = document.createElement("h2");
-    h2.innerHTML = `${pname} <span class="badge">${p.all.length} rows · ${p.all.filter(r=>r.ok).length} ok</span>`;
-    block.appendChild(h2);
+    // body
+    const body = document.createElement("div");
+    body.className = "pc-body";
 
     // winner
     if (p.best) {
       const w = document.createElement("div");
       w.className = "winner";
       w.innerHTML = `
-        <span class="crown">&#127942;</span>
+        <span class="trophy">&#127942;</span>
         <div class="info">
+          <div class="label">winner</div>
           <div class="model">${escapeHtml(p.best.model)}</div>
           <div class="lane">${escapeHtml(p.best.lane)}</div>
         </div>
         <div class="metrics">
-          <div class="ms">${p.best.ms}ms</div>
-          <div>${p.best.textLen}c &middot; <span class="score">${p.best.score}</span></div>
+          <div class="ms">${p.best.ms}<small> ms</small></div>
+          <div class="score">${p.best.textLen}c · score ${p.best.score}</div>
         </div>`;
-      block.appendChild(w);
+      body.appendChild(w);
     }
 
-    // collapse toggle
-    const btn = document.createElement("button");
-    btn.className = "collapse-toggle";
-    btn.textContent = "show all rows";
-    btn.onclick = () => {
-      const c = block.querySelector(".collapse-content");
-      const open = c.classList.toggle("open");
-      btn.textContent = open ? "hide all rows" : "show all rows";
-    };
-    block.appendChild(btn);
+    // table
+    const tw = document.createElement("div");
+    tw.className = "table-wrap";
+    tw.innerHTML = buildTable(p);
+    body.appendChild(tw);
 
-    // full table
-    const ct = document.createElement("div");
-    ct.className = "collapse-content";
-    ct.innerHTML = buildTable(p.all, p.ranked);
-    block.appendChild(ct);
-
-    evidence.appendChild(block);
+    card.appendChild(body);
+    evidence.appendChild(card);
   });
 
-  // algorithm
+  // method
   document.getElementById("algo").innerHTML =
-    `<span class="kw">score</span>(row, peers) = ` +
-    `<span class="num">0.5</span> × latency_norm + ` +
-    `<span class="num">0.3</span> × content_norm + ` +
-    `<span class="num">0.2</span> × correctness_bonus<br><br>` +
-    `latency_norm = <span class="num">1</span> − (row.ms − min_ms) / (max_ms − min_ms)<br>` +
-    `content_norm = row.textLen / max_textLen<br>` +
-    `correctness_bonus = <span class="num">1.0</span> if ok, <span class="num">0</span> if error<br><br>` +
-    `<span class="str">// weighted: speed favors fast-correct, not just fast</span><br>` +
-    `<span class="str">// ties broken by score desc → ranked[0] = winner</span>`;
+    `<span class="kw">score</span>(row, peers) = <span class="num">0.5</span>·latency_norm + <span class="num">0.3</span>·content_norm + <span class="num">0.2</span>·correctness<br>` +
+    `latency_norm = <span class="num">1</span> − (row.ms − min_ms)/(max_ms − min_ms)<br>` +
+    `content_norm = row.textLen / max_textLen &nbsp;&nbsp; correctness = <span class="num">1</span> ok / <span class="num">0</span> error<br>` +
+    `<span class="str">// ranked[0] = winner · ties break by score desc · speed favors fast-correct, not just fast</span>`;
+  document.getElementById("weights").innerHTML = `
+    <div class="weight"><div class="w-label">latency</div><div class="w-val">0.5</div></div>
+    <div class="weight"><div class="w-label">content</div><div class="w-val">0.3</div></div>
+    <div class="weight"><div class="w-label">correctness</div><div class="w-val">0.2</div></div>`;
+
+  // reveal on scroll
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".reveal:not(.in)").forEach(el => io.observe(el));
 }
 
-function buildTable(allRows, rankedRows) {
+function buildTable(p) {
   const rankSet = new Map();
-  (rankedRows || []).forEach((r, i) => rankSet.set(r.lane + "|" + r.model, i + 1));
+  (p.ranked || []).forEach((r, i) => rankSet.set(r.lane + "|" + r.model, i + 1));
 
-  let html = `<table class="full-table">
-    <thead><tr><th>#</th><th>model</th><th>lane</th><th>ms</th><th>chars</th><th>score</th><th>status</th></tr></thead><tbody>`;
+  let html = `<table><thead><tr>
+    <th>#</th><th>model</th><th>lane</th><th>ms</th><th>chars</th><th>score</th><th>status</th><th>raw</th>
+  </tr></thead><tbody>`;
 
-  allRows.forEach((r, i) => {
+  p.all.forEach((r, i) => {
     const rk = rankSet.get(r.lane + "|" + r.model);
-    const rankClass = rk === 1 ? "r1" : rk === 2 ? "r2" : rk === 3 ? "r3" : "";
-    const scoreClass = r.score >= 0.8 ? "high" : r.score >= 0.5 ? "mid" : "low";
-    const statusClass = r.ok ? "status-ok" : "status-err";
-    const statusText = r.ok ? "ok" : (r.err || "error");
+    const rkCls = rk === 1 ? "r1" : rk === 2 ? "r2" : rk === 3 ? "r3" : "";
+    const scCls = r.score >= 0.8 ? "high" : r.score >= 0.5 ? "mid" : "low";
+    const stCls = r.ok ? "st-ok" : "st-err";
+    const stText = r.ok ? "ok" : (r.err || "error");
     const scoreStr = r.score != null ? r.score : "—";
+    const hasText = r.text != null && r.text.length > 0;
+    const rawContent = hasText
+      ? escapeHtml(r.text)
+      : `<span class="gap-note">raw output not captured for this lane (NVIDIA bench lacks text persistence)</span>`;
 
     html += `<tr>
-      <td class="rank-cell ${rankClass}">${rk || (i+1)}</td>
+      <td class="rk ${rkCls}">${rk || (i+1)}</td>
       <td class="model-cell">${escapeHtml(r.model)}</td>
       <td class="lane-cell">${escapeHtml(r.lane)}</td>
-      <td class="ms-cell">${r.ms}</td>
-      <td>${r.textLen || 0}</td>
-      <td class="score-cell ${scoreClass}">${scoreStr}</td>
-      <td class="${statusClass}">${statusText}</td>
+      <td class="num">${r.ms}</td>
+      <td class="num">${r.textLen || 0}</td>
+      <td class="num score-cell ${scCls}">${scoreStr}</td>
+      <td class="${stCls}">${stText}</td>
+      <td><button class="raw-btn${hasText ? "" : " no-text"}" data-i="${i}">${hasText ? "view" : "n/a"}</button></td>
+    </tr>
+    <tr class="raw-row" id="rawrow-${i}" style="display:none">
+      <td colspan="8"><div class="raw-box">${rawContent}</div></td>
     </tr>`;
   });
 
   html += `</tbody></table>`;
   return html;
 }
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".raw-btn");
+  if (!btn) return;
+  const i = btn.dataset.i;
+  const row = document.getElementById("rawrow-" + i);
+  if (!row) return;
+  const open = row.style.display === "none";
+  row.style.display = open ? "" : "none";
+  btn.textContent = open ? "hide" : (btn.classList.contains("no-text") ? "n/a" : "view");
+});
 
 function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c])); }
 init();
