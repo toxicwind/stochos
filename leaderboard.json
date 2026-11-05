@@ -1,30 +1,37 @@
 {
-  "generatedAt": "2026-11-05T07:20:20.461Z",
-  "benchmark": "complex-prompt vision (phone screenshot 2026-11-05)",
+  "generatedAt": "2026-11-05T07:30:28.307Z",
+  "benchmark": "complex-prompt vision · phone screenshot 2026-11-05 · freeinference + NVIDIA",
   "image": "Screenshot_20261105-000919.png",
   "prompts": {
     "P1_UI": {
       "best": {
-        "lane": "freeinference",
-        "model": "glm-5.3-flash",
-        "ms": 2875,
-        "textLen": 1167,
-        "score": 0.978
+        "lane": "nvidia-direct",
+        "model": "google/diffusiongemma-26b-a4b-it",
+        "ms": 2777,
+        "textLen": 1056,
+        "score": 0.952
       },
       "ranked": [
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ms": 2777,
+          "textLen": 1056,
+          "score": 0.952
+        },
         {
           "lane": "freeinference",
           "model": "glm-5.3-flash",
           "ms": 2875,
           "textLen": 1167,
-          "score": 0.978
+          "score": 0.879
         },
         {
           "lane": "freeinference",
           "model": "qwen3.6-35b",
           "ms": 3031,
           "textLen": 1235,
-          "score": 0.798
+          "score": 0.737
         },
         {
           "lane": "nvidia-direct",
@@ -41,7 +48,7 @@
         "model": "qwen3.6-35b",
         "ms": 2209,
         "textLen": 1021,
-        "score": 1
+        "score": 0.894
       },
       "ranked": [
         {
@@ -49,14 +56,28 @@
           "model": "qwen3.6-35b",
           "ms": 2209,
           "textLen": 1021,
-          "score": 1
+          "score": 0.894
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ms": 1445,
+          "textLen": 437,
+          "score": 0.828
         },
         {
           "lane": "nvidia-direct",
           "model": "google/diffusiongemma-26b-a4b-it",
           "ms": 2478,
           "textLen": 730,
-          "score": 0.867
+          "score": 0.771
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+          "ms": 3115,
+          "textLen": 179,
+          "score": 0.521
         },
         {
           "lane": "freeinference",
@@ -71,24 +92,31 @@
       "best": {
         "lane": "nvidia-direct",
         "model": "google/diffusiongemma-26b-a4b-it",
-        "ms": 2062,
-        "textLen": 1300,
-        "score": 0.993
+        "ms": 1764,
+        "textLen": 1279,
+        "score": 0.988
       },
       "ranked": [
         {
           "lane": "nvidia-direct",
           "model": "google/diffusiongemma-26b-a4b-it",
+          "ms": 1764,
+          "textLen": 1279,
+          "score": 0.988
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
           "ms": 2062,
           "textLen": 1300,
-          "score": 0.993
+          "score": 0.962
         },
         {
           "lane": "freeinference",
           "model": "qwen3.6-35b",
           "ms": 2720,
           "textLen": 1330,
-          "score": 0.925
+          "score": 0.898
         },
         {
           "lane": "freeinference",
