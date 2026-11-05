@@ -1,7 +1,8 @@
 {
-  "generatedAt": "2026-11-05T07:30:28.307Z",
+  "generatedAt": "2026-11-05T07:45:34.155Z",
   "benchmark": "complex-prompt vision · phone screenshot 2026-11-05 · freeinference + NVIDIA",
   "image": "Screenshot_20261105-000919.png",
+  "imageUrl": "https://raw.githubusercontent.com/toxicwind/stochos/gh-pages/Screenshot_20261105-000919.png",
   "prompts": {
     "P1_UI": {
       "best": {
@@ -39,6 +40,62 @@
           "ms": 3271,
           "textLen": 1258,
           "score": 0.5
+        }
+      ],
+      "all": [
+        {
+          "lane": "freeinference",
+          "model": "qwen3.6-35b",
+          "ok": true,
+          "ms": 3031,
+          "textLen": 1235,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "freeinference",
+          "model": "glm-5.3-flash",
+          "ok": true,
+          "ms": 2875,
+          "textLen": 1167,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ok": true,
+          "ms": 3271,
+          "textLen": 1258,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ok": true,
+          "ms": 2777,
+          "textLen": 1056,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+          "ok": true,
+          "ms": 2937,
+          "textLen": 0,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "ok": true,
+          "ms": 4341,
+          "textLen": 0,
+          "status": "ok",
+          "err": null
         }
       ]
     },
@@ -86,6 +143,62 @@
           "textLen": 988,
           "score": 0.49
         }
+      ],
+      "all": [
+        {
+          "lane": "freeinference",
+          "model": "qwen3.6-35b",
+          "ok": true,
+          "ms": 2209,
+          "textLen": 1021,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "freeinference",
+          "model": "glm-5.3-flash",
+          "ok": true,
+          "ms": 5051,
+          "textLen": 988,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ok": true,
+          "ms": 2478,
+          "textLen": 730,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ok": true,
+          "ms": 1445,
+          "textLen": 437,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+          "ok": true,
+          "ms": 3115,
+          "textLen": 179,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "ok": true,
+          "ms": 8419,
+          "textLen": 0,
+          "status": "ok",
+          "err": null
+        }
       ]
     },
     "P3_REASON": {
@@ -124,6 +237,62 @@
           "ms": 6470,
           "textLen": 1255,
           "score": 0.483
+        }
+      ],
+      "all": [
+        {
+          "lane": "freeinference",
+          "model": "qwen3.6-35b",
+          "ok": true,
+          "ms": 2720,
+          "textLen": 1330,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "freeinference",
+          "model": "glm-5.3-flash",
+          "ok": true,
+          "ms": 6470,
+          "textLen": 1255,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ok": true,
+          "ms": 2062,
+          "textLen": 1300,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "google/diffusiongemma-26b-a4b-it",
+          "ok": true,
+          "ms": 1764,
+          "textLen": 1279,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+          "ok": true,
+          "ms": 3014,
+          "textLen": 0,
+          "status": "ok",
+          "err": null
+        },
+        {
+          "lane": "nvidia-direct",
+          "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "ok": true,
+          "ms": 4734,
+          "textLen": 0,
+          "status": "ok",
+          "err": null
         }
       ]
     }
