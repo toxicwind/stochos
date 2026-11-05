@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stochos · benchmark proof</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.0.18/index.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.18/index.min.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0e14; --bg2: #12161f; --card: #171c28; --border: #232a3a;
+  --text: #e6e9f0; --muted: #8b93a7; --accent: #6ee7b7; --accent2: #60a5fa;
+  --gold: #fbbf24; --red: #f87171; --green: #4ade80;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+.wrap { max-width: 960px; margin: 0 auto; }
+
+/* --- proof header --- */
+.proof-header {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.proof-header h1 {
+  font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--accent); margin-bottom: 0.3rem;
+}
+.proof-header .meta {
+  font-family: "JetBrains Mono", monospace; font-size: 0.75rem;
+  color: var(--muted); margin-bottom: 1rem;
+}
+.proof-header .meta span { color: var(--text); }
+
+/* --- source image --- */
+.source-img {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.source-img img { width: 100%; display: block; }
+.source-img .caption {
+  padding: 0.5rem 0.8rem;
+  font-family: "JetBrains Mono", monospace; font-size: 0.7rem;
+  color: var(--muted); background: var(--bg2);
+}
+
+/* --- evidence blocks --- */
+.evidence { margin-bottom: 1.5rem; }
+.evidence h2 {
+  font-size: 1.1rem; font-weight: 600; margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.evidence h2 .badge {
+  font-family: "JetBrains Mono", monospace; font-size: 0.65rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem; border-radius: 4px; color: var(--muted);
+}
+
+/* --- winner card --- */
+.winner {
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  background: linear-gradient(120deg, rgba(110,231,183,0.08), rgba(96,165,250,0.08));
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 1rem;
+  flex-wrap: wrap;
+}
+.winner .crown { font-size: 1.6rem; }
+.winner .info { flex: 1; min-width: 0; }
+.winner .model { font-weight: 700; font-size: 1.05rem; }
+.winner .lane { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--muted); }
+.winner .metrics { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; text-align: right; }
+.winner .metrics .ms { color: var(--accent); font-size: 1.1rem; }
+.winner .metrics .score { color: var(--gold); }
+
+/* --- full table --- */
+.full-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+}
+.full-table th {
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  position: sticky;
+  top: 0;
+  background: var(--card);
+}
+.full-table td {
+  padding: 0.45rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.full-table tr:hover { background: rgba(110,231,183,0.03); }
+.full-table .rank-cell { width: 2rem; text-align: center; color: var(--muted); }
+.full-table .rank-cell.r1 { color: var(--gold); font-weight: 700; }
+.full-table .rank-cell.r2 { color: var(--silver); font-weight: 700; }
+.full-table .rank-cell.r3 { color: var(--bronze); font-weight: 700; }
+.full-table .model-cell { color: var(--text); font-weight: 600; }
+.full-table .lane-cell { color: var(--muted); }
+.full-table .ms-cell { color: var(--text); text-align: right; white-space: nowrap; }
+.full-table .score-cell { text-align: right; white-space: nowrap; }
+.full-table .score-cell.high { color: var(--green); }
+.full-table .score-cell.mid { color: var(--gold); }
+.full-table .score-cell.low { color: var(--red); }
+.full-table .status-ok { color: var(--green); }
+.full-table .status-err { color: var(--red); }
+
+/* --- algorithm --- */
+.algo-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg2);
+  padding: 1rem 1.2rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted);
+  overflow-x: auto;
+}
+.algo-block .kw { color: var(--accent); }
+.algo-block .num { color: var(--gold); }
+.algo-block .str { color: var(--accent2); }
+
+/* --- collapse toggle --- */
+.collapse-toggle {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  font-family: "JetBrains Mono", monospace; font-size: 0.7rem;
+  padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+.collapse-toggle:hover { border-color: var(--accent); color: var(--text); }
+.collapse-content { display: none; }
+.collapse-content.open { display: block; }
+
+/* --- footer --- */
+footer {
+  margin-top: 2.5rem;
+  color: var(--muted); font-size: 0.7rem;
+  text-align: center; font-family: "JetBrains Mono", monospace;
+}
+footer a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .winner { flex-direction: column; align-items: flex-start; }
+  .winner .metrics { text-align: left; width: 100%; }
+  .full-table { font-size: 0.65rem; }
+  .full-table th, .full-table td { padding: 0.35rem 0.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="proof-header">
+    <h1>stochos · model-routing benchmark proof</h1>
+    <div class="meta" id="meta"></div>
+    <div id="source-image"></div>
+  </div>
+
+  <div id="evidence"></div>
+
+  <div class="evidence">
+    <h2>selection algorithm <span class="badge">source</span></h2>
+    <div class="algo-block" id="algo"></div>
+  </div>
+
+  <footer>
+    nightly benchmark · <a href="https://github.com/toxicwind/stochos">toxicwind/stochos</a> ·
+    data driven by the <a href="https://github.com/toxicwind/stochos/blob/main/src/algo.ts">selection algorithm</a>
+  </footer>
+
+</div>
+<script>
+async function init() {
+  const res = await fetch("./leaderboard.json");
+  const data = await res.json();
+
+  // header meta
+  document.getElementById("meta").innerHTML =
+    `<span>generated</span> ${new Date(data.generatedAt).toLocaleString()} &middot; <span>benchmark</span> ${escapeHtml(data.benchmark)}`;
+
+  // source image
+  if (data.imageUrl) {
+    document.getElementById("source-image").innerHTML =
+      `<div class="source-img"><img src="${escapeHtml(data.imageUrl)}" alt="benchmark source image"><div class="caption">${escapeHtml(data.image)} — source image used for all prompts</div></div>`;
+  }
+
+  const evidence = document.getElementById("evidence");
+  const promptNames = Object.keys(data.prompts);
+  const totalRows = promptNames.reduce((s, p) => s + data.prompts[p].all.length, 0);
+  const totalOk = promptNames.reduce((s, p) => s + data.prompts[p].all.filter(r => r.ok).length, 0);
+
+  promptNames.forEach((pname) => {
+    const p = data.prompts[pname];
+    const block = document.createElement("div");
+    block.className = "evidence";
+
+    // header
+    const h2 = document.createElement("h2");
+    h2.innerHTML = `${pname} <span class="badge">${p.all.length} rows · ${p.all.filter(r=>r.ok).length} ok</span>`;
+    block.appendChild(h2);
+
+    // winner
+    if (p.best) {
+      const w = document.createElement("div");
+      w.className = "winner";
+      w.innerHTML = `
+        <span class="crown">&#127942;</span>
+        <div class="info">
+          <div class="model">${escapeHtml(p.best.model)}</div>
+          <div class="lane">${escapeHtml(p.best.lane)}</div>
+        </div>
+        <div class="metrics">
+          <div class="ms">${p.best.ms}ms</div>
+          <div>${p.best.textLen}c &middot; <span class="score">${p.best.score}</span></div>
+        </div>`;
+      block.appendChild(w);
+    }
+
+    // collapse toggle
+    const btn = document.createElement("button");
+    btn.className = "collapse-toggle";
+    btn.textContent = "show all rows";
+    btn.onclick = () => {
+      const c = block.querySelector(".collapse-content");
+      const open = c.classList.toggle("open");
+      btn.textContent = open ? "hide all rows" : "show all rows";
+    };
+    block.appendChild(btn);
+
+    // full table
+    const ct = document.createElement("div");
+    ct.className = "collapse-content";
+    ct.innerHTML = buildTable(p.all, p.ranked);
+    block.appendChild(ct);
+
+    evidence.appendChild(block);
+  });
+
+  // algorithm
+  document.getElementById("algo").innerHTML =
+    `<span class="kw">score</span>(row, peers) = ` +
+    `<span class="num">0.5</span> × latency_norm + ` +
+    `<span class="num">0.3</span> × content_norm + ` +
+    `<span class="num">0.2</span> × correctness_bonus<br><br>` +
+    `latency_norm = <span class="num">1</span> − (row.ms − min_ms) / (max_ms − min_ms)<br>` +
+    `content_norm = row.textLen / max_textLen<br>` +
+    `correctness_bonus = <span class="num">1.0</span> if ok, <span class="num">0</span> if error<br><br>` +
+    `<span class="str">// weighted: speed favors fast-correct, not just fast</span><br>` +
+    `<span class="str">// ties broken by score desc → ranked[0] = winner</span>`;
+}
+
+function buildTable(allRows, rankedRows) {
+  const rankSet = new Map();
+  (rankedRows || []).forEach((r, i) => rankSet.set(r.lane + "|" + r.model, i + 1));
+
+  let html = `<table class="full-table">
+    <thead><tr><th>#</th><th>model</th><th>lane</th><th>ms</th><th>chars</th><th>score</th><th>status</th></tr></thead><tbody>`;
+
+  allRows.forEach((r, i) => {
+    const rk = rankSet.get(r.lane + "|" + r.model);
+    const rankClass = rk === 1 ? "r1" : rk === 2 ? "r2" : rk === 3 ? "r3" : "";
+    const scoreClass = r.score >= 0.8 ? "high" : r.score >= 0.5 ? "mid" : "low";
+    const statusClass = r.ok ? "status-ok" : "status-err";
+    const statusText = r.ok ? "ok" : (r.err || "error");
+    const scoreStr = r.score != null ? r.score : "—";
+
+    html += `<tr>
+      <td class="rank-cell ${rankClass}">${rk || (i+1)}</td>
+      <td class="model-cell">${escapeHtml(r.model)}</td>
+      <td class="lane-cell">${escapeHtml(r.lane)}</td>
+      <td class="ms-cell">${r.ms}</td>
+      <td>${r.textLen || 0}</td>
+      <td class="score-cell ${scoreClass}">${scoreStr}</td>
+      <td class="${statusClass}">${statusText}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  return html;
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c])); }
+init();
+</script>
+</body>
+</html>
