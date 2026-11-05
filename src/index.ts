@@ -14,3 +14,5 @@ export type { DispatchResult, ProviderClient, RouterOptions } from "./router";
 export { applyCoercion, coerceWithLua } from "./lua";
 export type { LuaCoercionInput, LuaCoercionResult } from "./lua";
 export { defaultMatrix } from "./default-matrix";
+export { dominates, paretoFrontier, scoreRow, selectBest } from "./algo";
+export type { BenchRow, SelectionOptions, SelectionResult } from "./algo";

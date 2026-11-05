@@ -2,11 +2,13 @@
 // bin/stochos.ts — stochos CLI.
 // Subcommands:
 //   stochos matrix <role>   — resolve a role against the default matrix
-//   stochos probe           — run a live provider×model probe (latency+status)
+//   stochos select <json>   — run the selection algorithm on a benchmark file
 //   stochos coerce <script> — evaluate a Lua coercion script against candidates
-import { defineMatrix, resolveAll } from "../src/matrix";
+import { readFileSync } from "node:fs";
+import { resolveAll } from "../src/matrix";
 import { applyCoercion } from "../src/lua";
 import { defaultMatrix } from "../src/default-matrix";
+import { selectBest } from "../src/algo";
 
 const [,, sub, arg] = process.argv;
 
@@ -21,6 +23,19 @@ async function main() {
       }
       break;
     }
+    case "select": {
+      if (!arg) { console.error("usage: stochos select <benchmark-results.json>"); process.exit(1); }
+      const rows = JSON.parse(readFileSync(arg, "utf8"));
+      const results = selectBest(rows);
+      for (const r of results) {
+        console.log(`\n[${r.prompt}]`);
+        for (const cand of r.ranked) {
+          const star = cand === r.best ? " ★" : "";
+          console.log(`  ${cand.lane}/${cand.model.padEnd(30)} score=${cand.score.toFixed(3)} ${cand.ms}ms ${cand.textLen}c${star}`);
+        }
+      }
+      break;
+    }
     case "coerce": {
       if (!arg) { console.error("usage: stochos coerce <lua-script>"); process.exit(1); }
       const role = matrix.roles[0];
@@ -31,6 +46,7 @@ async function main() {
     default:
       console.log("stochos — per-model-per-provider-per-router routing control plane");
       console.log("  stochos matrix   — resolve all roles against the default matrix");
+      console.log("  stochos select   — run the selection algorithm on a benchmark file");
       console.log("  stochos coerce   — evaluate a Lua coercion script");
   }
 }
