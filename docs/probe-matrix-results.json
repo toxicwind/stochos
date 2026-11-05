@@ -1,0 +1,144 @@
+[
+  {
+    "provider": "rhodochrosite",
+    "model": "qwen3.6-35b",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 301,
+    "text": "OK"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "glm-5.3-flash",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 22129,
+    "text": "OK"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "deepseek-v4-flash",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 12866,
+    "text": "OK"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "minimax-m3",
+    "kind": "chat",
+    "ok": false,
+    "ms": 30013,
+    "err": "The operation timed out."
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "diffusiongemma",
+    "kind": "chat",
+    "ok": false,
+    "ms": 30025,
+    "err": "The operation timed out."
+  },
+  {
+    "provider": "keypool",
+    "model": "qwen3.6-35b",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 182,
+    "text": "OK"
+  },
+  {
+    "provider": "keypool",
+    "model": "glm-5.3-flash",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 4182,
+    "text": "OK"
+  },
+  {
+    "provider": "freeinference-direct",
+    "model": "glm-5.3-flash",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 2096,
+    "text": "OK"
+  },
+  {
+    "provider": "freeinference-direct",
+    "model": "qwen3.6-35b",
+    "kind": "chat",
+    "ok": true,
+    "status": 200,
+    "ms": 155,
+    "text": "OK"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "qwen3.6-35b",
+    "kind": "vision",
+    "ok": false,
+    "status": 502,
+    "ms": 1,
+    "err": "{\"error\":{\"code\":\"bad_gateway\",\"message\":\"upstream response failed or timed out\",\"type\":\"proxy_error"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "glm-5.3-flash",
+    "kind": "vision",
+    "ok": false,
+    "status": 502,
+    "ms": 0,
+    "err": "{\"error\":{\"code\":\"bad_gateway\",\"message\":\"upstream response failed or timed out\",\"type\":\"proxy_error"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+    "kind": "vision",
+    "ok": false,
+    "status": 502,
+    "ms": 0,
+    "err": "{\"error\":{\"code\":\"bad_gateway\",\"message\":\"upstream response failed or timed out\",\"type\":\"proxy_error"
+  },
+  {
+    "provider": "freeinference-direct",
+    "model": "glm-5.3-flash",
+    "kind": "vision",
+    "ok": true,
+    "status": 200,
+    "ms": 207,
+    "text": "Red"
+  },
+  {
+    "provider": "freeinference-direct",
+    "model": "qwen3.6-35b",
+    "kind": "vision",
+    "ok": true,
+    "status": 200,
+    "ms": 210,
+    "text": "Red"
+  },
+  {
+    "provider": "freeinference-direct",
+    "model": "deepseek-v4-flash",
+    "kind": "vision",
+    "ok": false,
+    "status": 400,
+    "ms": 109,
+    "err": "{\"error\":{\"type\":\"unknown\",\"message\":\"Invalid request (request_id: req_f75d416fdbea4d8d849ceb0239927"
+  },
+  {
+    "provider": "rhodochrosite",
+    "model": "qwen3.6-35b",
+    "kind": "reasoning",
+    "ok": false,
+    "status": 502,
+    "ms": 0,
+    "err": "{\"error\":{\"code\":\"bad_gateway\",\"message\":\"upstream response failed or timed out\",\"type\":\"proxy_error"
+  }
+]
