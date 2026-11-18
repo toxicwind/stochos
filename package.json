@@ -1,5 +1,5 @@
 {
-  "name": "estate-product",
+  "name": "@geode/stochos",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "bun build src/index.ts --outdir dist"
   },
   "bin": {
-    "estate-product": "src/index.ts"
+    "pens-product": "src/index.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.0",
